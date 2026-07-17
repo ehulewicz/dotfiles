@@ -47,8 +47,10 @@ done
 
 # --- MCP servers (Claude Code + Codex) -------------------------------------
 # Registered only if the CLI is installed and the server isn't already there.
-# github (remote HTTP): Claude authenticates via OAuth (`/mcp` in a session);
-# Codex needs a PAT exported as GITHUB_MCP_PAT (put it in ~/.bashrc.local).
+# github (remote HTTP): both tools authenticate with a PAT exported as
+# GITHUB_MCP_PAT (put it in ~/.bashrc.local). OAuth doesn't work for either —
+# GitHub's MCP server lacks dynamic client registration, which both CLIs'
+# OAuth flows require. Claude expands ${GITHUB_MCP_PAT} at connect time.
 
 if command -v claude >/dev/null 2>&1; then
   claude_mcp() { # name, then the add-args
@@ -61,7 +63,7 @@ if command -v claude >/dev/null 2>&1; then
   }
   claude_mcp playwright -- npx @playwright/mcp@latest
   claude_mcp chrome-devtools -- npx chrome-devtools-mcp@latest
-  claude_mcp github --transport http https://api.githubcopilot.com/mcp/
+  claude_mcp github --transport http https://api.githubcopilot.com/mcp/ --header 'Authorization: Bearer ${GITHUB_MCP_PAT}'
 else
   echo "SKIP  claude CLI not installed — no Claude MCP registration"
 fi

@@ -30,7 +30,7 @@ are installed (skipped otherwise, idempotent like everything else):
 |---|---|---|
 | `playwright` (`@playwright/mcp`) | stdio | none |
 | `chrome-devtools` (`chrome-devtools-mcp`) | stdio | none |
-| `github` (api.githubcopilot.com/mcp) | HTTP | Claude: OAuth via `/mcp` in a session. Codex: PAT in `GITHUB_MCP_PAT` (export from `~/.bashrc.local`) — its OAuth flow needs dynamic client registration, which GitHub's server doesn't support |
+| `github` (api.githubcopilot.com/mcp) | HTTP | Both tools: PAT in `GITHUB_MCP_PAT`, exported from `~/.bashrc.local`. OAuth fails in both CLIs — GitHub's server doesn't support the dynamic client registration their flows require. Claude reads it via `${GITHUB_MCP_PAT}` header expansion; Codex via `--bearer-token-env-var` |
 
 ## Three config tiers
 
