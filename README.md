@@ -21,6 +21,17 @@ empty `.local` override files. Re-run it after adding a new managed file.
 | `.bashrc` | `~/.bashrc` | Portable core; sources `~/.bashrc.local` at the end |
 | `.gitconfig` | `~/.gitconfig` | Identity + include tiers |
 
+## MCP servers
+
+`bootstrap.sh` also registers MCP servers for whichever of Claude Code / Codex
+are installed (skipped otherwise, idempotent like everything else):
+
+| Server | Transport | Auth |
+|---|---|---|
+| `playwright` (`@playwright/mcp`) | stdio | none |
+| `chrome-devtools` (`chrome-devtools-mcp`) | stdio | none |
+| `github` (api.githubcopilot.com/mcp) | HTTP | Claude: OAuth via `/mcp` in a session. Codex: PAT in `GITHUB_MCP_PAT` (export from `~/.bashrc.local`) — its OAuth flow needs dynamic client registration, which GitHub's server doesn't support |
+
 ## Three config tiers
 
 1. **Versioned core** — the files in this repo. Most changes go here.
@@ -34,5 +45,5 @@ empty `.local` override files. Re-run it after adding a new managed file.
 ## Roadmap
 
 Later passes will add the agent-workflow layer from the ground up: shared
-Claude Code / Codex instructions and skills, MCP registration in bootstrap,
-and a unified script layer. Deliberately not started yet.
+Claude Code / Codex instructions and skills, and a unified script layer.
+Deliberately not started yet (MCP registration landed early, above).
