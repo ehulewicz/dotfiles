@@ -62,7 +62,7 @@ if command -v claude >/dev/null 2>&1; then
     fi
   }
   claude_mcp playwright -- npx @playwright/mcp@latest
-  claude_mcp chrome-devtools -- npx chrome-devtools-mcp@latest
+  claude_mcp chrome-devtools -- npx chrome-devtools-mcp@latest --autoConnect
   claude_mcp github --transport http https://api.githubcopilot.com/mcp/ --header 'Authorization: Bearer ${GITHUB_MCP_PAT}'
 else
   echo "SKIP  claude CLI not installed — no Claude MCP registration"
@@ -78,7 +78,7 @@ if command -v codex >/dev/null 2>&1; then
     fi
   }
   codex_mcp playwright -- npx @playwright/mcp@latest
-  codex_mcp chrome-devtools -- npx chrome-devtools-mcp@latest
+  codex_mcp chrome-devtools -- npx chrome-devtools-mcp@latest --autoConnect
   codex_mcp github --url https://api.githubcopilot.com/mcp/ --bearer-token-env-var GITHUB_MCP_PAT
 else
   echo "SKIP  codex CLI not installed — no Codex MCP registration"
