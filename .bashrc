@@ -1,6 +1,7 @@
 # ~/.bashrc: executed by bash(1) for non-login shells.
-# see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
-# for examples
+# Managed by the dotfiles repo — this file is the portable core, shared across
+# machines. Machine-specific config (work aliases, keys, hosts) belongs in
+# ~/.bashrc.local, which is sourced at the end of this file and never committed.
 
 # If not running interactively, don't do anything
 case $- in
@@ -47,12 +48,12 @@ esac
 
 if [ -n "$force_color_prompt" ]; then
     if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
-	# We have color support; assume it's compliant with Ecma-48
-	# (ISO/IEC-6429). (Lack of such support is extremely rare, and such
-	# a case would tend to support setf rather than setaf.)
-	color_prompt=yes
+        # We have color support; assume it's compliant with Ecma-48
+        # (ISO/IEC-6429). (Lack of such support is extremely rare, and such
+        # a case would tend to support setf rather than setaf.)
+        color_prompt=yes
     else
-	color_prompt=
+        color_prompt=
     fi
 fi
 
@@ -88,14 +89,16 @@ fi
 #export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
 # some more ls aliases
+alias cls='clear; ls'
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
-alias mlx='code --remote ssh-remote+devbox /var/www/vhosts/xerp.ethan.merchlogix.us/'
-alias src='source ~/.bashrc'
-alias c='clear'
-alias cg='clear; git status'
-alias g='git'
+alias g="git"
+alias cg="clear; git status"
+alias c="clear;"
+alias src="source ~/.bashrc"
+
+alias o="code -r"
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
@@ -120,4 +123,18 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
-export PATH="$HOME/.npm-global/bin:$PATH"
+
+export PATH="$HOME/.local/bin:$PATH"
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# Report current directory to Windows Terminal (WSL only; no-op elsewhere)
+if [ -n "$WT_SESSION" ]; then
+  printf "\e]9;9;%s\e\\" "$(wslpath -m "$PWD")"
+fi
+
+# Machine-local overrides — work aliases, keys, anything device-specific.
+# Never committed; created empty by bootstrap.sh.
+[ -f ~/.bashrc.local ] && . ~/.bashrc.local

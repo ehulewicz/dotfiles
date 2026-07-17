@@ -1,0 +1,15 @@
+# Managed by the dotfiles repo — portable core git config.
+# Machine-local settings go in ~/.gitconfig.local (never committed).
+# Project-scoped settings live inside that project's repo via includeIf below.
+[user]
+	email = eahtree@gmail.com
+	name = ehulewicz
+
+# Machine-local overrides (created empty by bootstrap.sh). Git silently
+# ignores the include if the file doesn't exist.
+[include]
+	path = ~/.gitconfig.local
+
+# Project-scoped config, versioned inside the project itself.
+[includeIf "gitdir:~/personal-os/"]
+	path = ~/personal-os/.gitconfig
