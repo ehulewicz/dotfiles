@@ -100,6 +100,7 @@ alias src="source ~/.bashrc"
 
 alias o="code -r"
 alias hunt="os hunt"
+alias psqlos='psql "$(gcloud secrets versions access latest --secret=personal-os-api-database-url --project=personal-os-503003)"'
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
