@@ -99,6 +99,7 @@ alias c="clear;"
 alias src="source ~/.bashrc"
 
 alias o="code -r"
+alias hunt="os hunt"
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
